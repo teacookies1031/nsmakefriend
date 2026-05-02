@@ -1,0 +1,41 @@
+{
+  "name": "nsmakefriend",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "options": [
+      "--network=host"
+    ]
+  },
+
+  // Pass through the ESP32 USB serial device.
+  // Change the path if your board appears on a different node (e.g. /dev/ttyACM0).
+  "runArgs": [
+    "--network=host",
+    "--privileged",
+    "--device=/dev/ttyUSB0:/dev/ttyUSB0"
+  ],
+
+  "mounts": [
+    // Persist PlatformIO package cache across rebuilds
+    "source=nsmakefriend-pio-cache,target=/root/.platformio,type=volume"
+  ],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "platformio.platformio-ide",
+        "ms-python.python",
+        "ms-python.pylint"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "postCreateCommand": "python -m pip install --no-cache-dir --retries 10 --timeout 60 pyserial Pillow numpy",
+
+  "remoteUser": "root"
+}
