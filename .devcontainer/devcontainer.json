@@ -21,6 +21,12 @@
     "source=nsmakefriend-pio-cache,target=/root/.platformio,type=volume"
   ],
 
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -35,7 +41,9 @@
     }
   },
 
-  "postCreateCommand": "python -m pip install --no-cache-dir --retries 10 --timeout 60 pyserial Pillow numpy",
+  "postCreateCommand": "python -m pip install --no-cache-dir --retries 10 --timeout 60 pyserial Pillow numpy && npm install -g openwolf || true",
+
+  "forwardPorts": [18791],
 
   "remoteUser": "root"
 }
