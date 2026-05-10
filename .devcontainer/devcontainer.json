@@ -13,7 +13,10 @@
   "runArgs": [
     "--network=host",
     "--privileged",
-    "--device=/dev/ttyUSB0:/dev/ttyUSB0"
+    "--device=/dev/ttyUSB0:/dev/ttyUSB0",
+    "--device=/dev/ttyUSB1:/dev/ttyUSB1",
+    "--device=/dev/ttyACM0:/dev/ttyACM0",
+    "--device=/dev/ttyACM1:/dev/ttyACM1"
   ],
 
   "mounts": [
@@ -43,7 +46,7 @@
 
   "postCreateCommand": "python -m pip install --no-cache-dir --retries 10 --timeout 60 pyserial Pillow numpy && npm install -g openwolf || true",
 
-  "forwardPorts": [18791],
+  "forwardPorts": [18791, 8550],
 
   "remoteUser": "root"
 }

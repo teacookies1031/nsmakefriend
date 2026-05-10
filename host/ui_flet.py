@@ -111,13 +111,13 @@ def _badge(num: int) -> ft.Container:
     return ft.Container(
         content=ft.Text(str(num), size=11, color="white", weight=ft.FontWeight.BOLD),
         bgcolor=PRIMARY, width=22, height=22, border_radius=11,
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment.CENTER,
     )
 
 
 def _section_title(num: int, title: str, right=None) -> ft.Row:
     items = [_badge(num), ft.Text(title.upper(), size=11, weight=ft.FontWeight.BOLD,
-                                   color=TEXT, letter_spacing=1.2)]
+                                   color=TEXT)]
     if right:
         items.append(ft.Container(expand=True))
         items.append(right)
@@ -191,7 +191,7 @@ class NSMakeFriendApp:
 
     def _init_controls(self):
         self._file_picker = ft.FilePicker()
-        self.page.overlay.append(self._file_picker)
+        self.page.services.append(self._file_picker)
 
         # ── 1. Image ──────────────────────────────────────────────────────────
         self._orig_image = ft.Image(src=_BLANK_PNG, visible=False,
@@ -204,7 +204,7 @@ class NSMakeFriendApp:
                alignment=ft.MainAxisAlignment.CENTER, spacing=6),
             width=170, height=160,
             border=ft.border.all(2, BORDER), border_radius=10,
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment.CENTER,
         )
         self._img_name  = ft.Text("—",    color=TEXT,  size=11, weight=ft.FontWeight.W_500)
         self._img_dims  = ft.Text("—",    color=MUTED, size=11)
@@ -221,7 +221,7 @@ class NSMakeFriendApp:
                alignment=ft.MainAxisAlignment.CENTER, spacing=4),
             width=170, height=76,
             border=ft.border.all(1.5, BORDER), border_radius=10,
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment.CENTER,
             on_click=self._on_pick_file,
             ink=True,
         )
@@ -295,7 +295,7 @@ class NSMakeFriendApp:
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                alignment=ft.MainAxisAlignment.CENTER),
             expand=True, border=ft.border.all(2, BORDER), border_radius=10,
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment.CENTER,
         )
         self._preview_ring  = ft.ProgressRing(visible=False, color=PRIMARY,
                                                width=28, height=28)
@@ -331,7 +331,7 @@ class NSMakeFriendApp:
                                             border_radius=10,
                                             content=ft.Icon(ft.Icons.CHECK, color="white",
                                                             size=12),
-                                            alignment=ft.alignment.center,
+                                            alignment=ft.Alignment.CENTER,
                                             visible=False)
         self._status_title   = ft.Text("No image selected", color=MUTED, size=13,
                                        weight=ft.FontWeight.BOLD)
@@ -685,7 +685,7 @@ class NSMakeFriendApp:
                 ft.Row([
                     ft.Icon(ft.Icons.LIST_ALT, color=MUTED, size=14),
                     ft.Text("LOG", size=11, weight=ft.FontWeight.BOLD,
-                            color=TEXT, letter_spacing=1.2),
+                            color=TEXT),
                     ft.Container(expand=True),
                     ft.TextButton("Clear", icon=ft.Icons.DELETE_OUTLINE,
                                   on_click=self._on_clear_log,
@@ -699,7 +699,7 @@ class NSMakeFriendApp:
             ], spacing=6),
             bgcolor=CARD,
             border=ft.border.only(top=ft.BorderSide(1, BORDER)),
-            padding=ft.padding.fromLTRB(14, 10, 14, 10),
+            padding=ft.padding.only(left=14, top=10, right=14, bottom=10),
         )
 
         # ── Footer ────────────────────────────────────────────────────────────
@@ -1229,4 +1229,4 @@ async def main(page: ft.Page):
 
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    ft.run(main, view=ft.AppView.WEB_BROWSER, port=8550)
